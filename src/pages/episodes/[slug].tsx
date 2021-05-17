@@ -1,11 +1,9 @@
 import { format, parseISO } from 'date-fns';
 import ptBR from 'date-fns/locale/pt-BR'
-import Image from 'next/image';
 import Link from 'next/link';
 import Head from 'next/head';
 
-import { useRouter } from 'next/router'
-import next, { GetStaticPaths, GetStaticProps } from 'next';
+import { GetStaticPaths, GetStaticProps } from 'next';
 
 import { api } from '../../services/api';
 import { convertDurationToTimeString } from '../../utils/convertDurationToTimeString';
@@ -29,8 +27,6 @@ type EpisodeProps = {
 }
 
 export default function Episode({ episode }: EpisodeProps) {
-  //const { play } = usePlayer();
-
   return (
     <div className={styles.episode}>
       <Head>
@@ -64,10 +60,34 @@ export default function Episode({ episode }: EpisodeProps) {
   )
 }
 
+/*
+  Esse método é obrigatório para todo component que estiver usando o getStaticProps e tiver parâmetros dinâmicos(nesse caso o slug).
+  Dinêmico porque ainda não sabemos oq carregar estaticamente. No caso os paths são os caminhos q eu quero carregar estaticamente.
+  O fallback determina o funcionamento de um página q NÃO foi colocada no path, ou seja, não foi gerada de forma estática. Se eu passar fallback false
+  e não tiver nd no path vai dar 404 para as páginas. No caso do true, ele tenta buscar os dados, mas a requisição é feita pelo lado do client e 
+  só quando o usuário abrir a página. No caso do blocking o fallback ele roda a requisição no lado do next, ou seja, o usuário só vai pra página quando
+  os dados forem carregados. (increment static regenaration) 
+*/
 export const getStaticPaths: GetStaticPaths = async () => {
 
+  const { data } = await api.get("episodes", {
+    params: {
+      _limit: 2,
+      _sort: "published_at",
+      _order: "desc",
+    },
+  });
+
+  const paths = data.map((episode) => {
+    return {
+      params:{
+        slug: episode.id
+      }
+    };
+  });
+
   return {
-    paths: [],
+    paths,
     fallback: 'blocking'
   }
 }

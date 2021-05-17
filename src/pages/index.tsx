@@ -2,7 +2,7 @@
 
 /*
   Existem três formas de fazer comunicação com API:
-  1. SPA -> Single page aplication, ou seja, em qualquer projeto REACT TRADICIONAL. (Porblemas de indexação e busca pelo browsere)
+  1. SPA -> Single page aplication, ou seja, em qualquer projeto REACT TRADICIONAL. (Problemas de indexação e busca pelo browser)
   2. SSR -> Server Side Redding, ou seja, para NEXT. Nesse caso, sempre q alguém acessar a página vai fazer a requisição.
   3. SSG -> Server Side Generation, ou seja, para NEXT. Nesse caso, a página vai fazer a requisição quando for necessário. De quanto em quanto tempo eu quiser.
 */
@@ -16,7 +16,8 @@ import ptBR from "date-fns/locale/pt-BR";
 import parseISO from "date-fns/parseISO";
 import styles from '../pages/home.module.scss'
 import { convertDurationToTimeString } from "../utils/convertDurationToTimeString";
-
+import { useContext } from 'react';
+import { PlayerContext } from '../contexts/PlayerContext';
 
 type Episode = {
   id: string,
@@ -35,6 +36,9 @@ type HomeProps = {
 }
 
 export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
+
+  const { play } = useContext(PlayerContext);
+
   return (
     <div className={styles.homepage}>
       <section className={styles.latestEpisodes}>
@@ -52,7 +56,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                   <span>{episode.publishedAt}</span>
                   <span>{episode.durationAsString}</span>
                 </div>
-                <button type="button">
+                <button type="button" onClick={() => {play(episode)}}>
                   <img src="/play-green.svg" alt="Tocar episódio"/>
                 </button>
               </li>
@@ -90,7 +94,7 @@ export default function Home({ latestEpisodes, allEpisodes }: HomeProps) {
                     <td style={{ width: 100}}>{episode.publishedAt}</td>
                     <td>{episode.durationAsString}</td>
                     <td>
-                      <button>
+                      <button onClick={() => {play(episode)}}>
                         <img src="/play-green.svg" alt="Tocar episódio"/>
                       </button>
                     </td>
