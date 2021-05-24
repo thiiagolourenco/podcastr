@@ -1,5 +1,5 @@
 <div align="center">
-  <img src=".github/podcastr-logo.svg" alt="Podcastr logo">
+  <img src="./podcastr-logo.svg" alt="Podcastr logo">
 </div>
 
 ## Podcastr
@@ -12,13 +12,13 @@
   Podcastr is a platform built for podcast broadcasting.
 </h4>
 
-![Podcastr preview](.github/app-preview.png)
+![Podcastr preview](./app-preview.png)
 
 ## Tecnologies
 
 <div align="center">
   <br />
-  <img src=".github/tech-logos.png" alt="Technologies used">
+  <img src="./tech-logos.png" alt="Technologies used">
 </div>
 
 This project was developed using cutting edge front-end technologies.
@@ -37,7 +37,7 @@ This project was developed using cutting edge front-end technologies.
 **Clone the project and access the folder**
 
 ```bash
-$ git clone https://github.com/josepholiveira/podcastr.git && cd podcastr
+$ git clone https://github.com/thiiagolourenco/podcastr.git && cd podcastr
 ```
 
 **Follow the steps below**
